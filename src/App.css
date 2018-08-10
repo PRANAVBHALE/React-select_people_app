@@ -1,0 +1,25 @@
+.hotelApp{
+  background-color: pink;
+  width: 500px;
+  height:200px
+}
+
+.block{
+    padding-top:30px;
+    padding-left: 40px;
+
+    
+}
+
+
+span{
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+.dash{
+    height: 2px;
+    width: 300px;
+    background-color: black;
+    margin-top: 16px;
+}
