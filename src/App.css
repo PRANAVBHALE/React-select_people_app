@@ -1,16 +1,28 @@
+.app{
+    position: relative;
+    top: 200px;
+    left: 500px;
+    font-size: 20px;
+}
+
 .hotelApp{
-  background-color: pink;
-  width: 700px;
-  height:200px
+  background-color: #1f3944;
+  width: 500px;
+  height:250px;
+  color: white;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .block{
-    padding-top:30px;
+    padding-top:25px;
     padding-left: 40px;
-
-    
 }
 
+.message{
+     padding-right: 0px;
+}
 
 span{
     padding-left: 50px;
@@ -19,7 +31,23 @@ span{
 
 .dash{
     height: 2px;
-    width: 300px;
+    width: 400px;
     background-color: black;
-    margin-top: 16px;
+    margin-top: 14px;
+}
+
+.add{
+    height: 25px;
+    width: 25px;
+    background-color:#01FF70 ;
+    border-radius: 50%;
+    border: none;
+}
+
+.reduce{
+    height: 25px;
+    width: 25px;
+    background-color:#FF4136 ;
+    border-radius: 50%;
+    border: none;
 }

@@ -9,35 +9,50 @@ class App extends Component {
       adultcount: 1,
       childcount: 0,
       roomAddButton_isDisabled: false,
-      adultAddButton_isDisabled:false,
-      message:''
+      adultAddButton_isDisabled: false,
+      message: ""
     };
   }
 
-  addRoomCounter = (roomcounter,message) => {
-
-    if(message === "capacity full.Increse number of room"){
+  addRoomCounter = (roomcounter, message) => {
+    if (message === "Room capacity full.Increse number of room") {
       this.setState({
-        adultAddButton_isDisabled:false
-      })
+        adultAddButton_isDisabled: false
+      });
     }
 
     if (roomcounter >= 4) {
       this.setState({
         roomcounter: roomcounter + 1,
         roomAddButton_isDisabled: true,
-        message:""
+        message: ""
       });
     } else {
       this.setState({
         roomcounter: roomcounter + 1,
         roomAddButton_isDisabled: false,
-        message:""
+        message: ""
       });
     }
   };
 
   reduceRoomCounter = roomcounter => {
+    console.log(roomcounter);
+
+    let forcedAdultCount;
+
+    debugger
+
+    if (roomcounter === 5) {
+      forcedAdultCount = 16;
+    } else if (roomcounter === 4) {
+      forcedAdultCount = 12;
+    } else if (roomcounter === 3) {
+      forcedAdultCount = 8;
+    } else if (roomcounter === 2) {
+      forcedAdultCount = 4;
+    }
+
     if (roomcounter < 2) {
       this.setState({
         roomcounter: 1
@@ -47,18 +62,19 @@ class App extends Component {
       this.setState({
         roomcounter: roomcounter - 1,
         roomAddButton_isDisabled: false,
-        childcount:0
+        childcount: 0,
+        adultcount: forcedAdultCount
       });
     }
   };
 
-  addAdultCounter = (adultcount, childcount,roomcounter) => {
-    var chkStatus = this.checkCount(adultcount, childcount,roomcounter);
+  addAdultCounter = (adultcount, childcount, roomcounter) => {
+    var chkStatus = this.checkCount(adultcount, childcount, roomcounter);
 
     console.log(chkStatus);
 
-    if(chkStatus){
-      if (adultcount >= 4) {
+    if (chkStatus) {
+      if (adultcount > 4) {
         this.setState({
           adultcount: adultcount + 1
         });
@@ -67,32 +83,32 @@ class App extends Component {
           adultcount: adultcount + 1
         });
       }
-    }else{
+    } else {
       this.setState({
-        message:"capacity full.Increse number of room",
-        adultAddButton_isDisabled:true
-      })
+        message: "Room capacity full.Increse number of room",
+        adultAddButton_isDisabled: true
+      });
     }
-
-    
   };
 
-  checkCount = (adultcount, childcount,roomcounter) => {
+  checkCount = (adultcount, childcount, roomcounter) => {
     let maxRoomCapacity;
 
-    if(roomcounter === 1){
-      maxRoomCapacity = 4
-    }else if(roomcounter === 2){
-      maxRoomCapacity = 8 
-    }else if(roomcounter === 3){
-      maxRoomCapacity = 12
-    }else if(roomcounter === 4){
-      maxRoomCapacity = 16
-    }else{
+    if (roomcounter === 1) {
+      maxRoomCapacity = 4;
+    } else if (roomcounter === 2) {
+      maxRoomCapacity = 8;
+    } else if (roomcounter === 3) {
+      maxRoomCapacity = 12;
+    } else if (roomcounter === 4) {
+      maxRoomCapacity = 16;
+    } else if(roomcounter === 5){
+      maxRoomCapacity = 20;
+    } else{
       return null
     }
 
-   // alert("checkcount", adultcount, childcount);
+    // alert("checkcount", adultcount, childcount);
     console.log(adultcount, childcount);
 
     if (maxRoomCapacity > adultcount + childcount) {
@@ -106,25 +122,25 @@ class App extends Component {
     if (adultcount < 2) {
       this.setState({
         adultcount: 1,
-        adultAddButton_isDisabled:false
+        adultAddButton_isDisabled: false
       });
     } else {
       this.setState({
         adultcount: adultcount - 1,
-        adultAddButton_isDisabled:false,
-        message:"",
+        adultAddButton_isDisabled: false,
+        message: ""
       });
     }
   };
 
-  addChildCounter = (childcount, adultcount,roomcounter) => {
+  addChildCounter = (childcount, adultcount, roomcounter) => {
     // this.checkCount(adultcount,childcount)
 
-    var chkStatus = this.checkCount(adultcount, childcount,roomcounter);
+    var chkStatus = this.checkCount(adultcount, childcount, roomcounter);
 
     console.log(chkStatus);
 
-    if(chkStatus){
+    if (chkStatus) {
       if (childcount >= 4) {
         this.setState({
           childcount: childcount + 1
@@ -136,14 +152,12 @@ class App extends Component {
           //  isDisabled : false
         });
       }
-    }else{
+    } else {
       this.setState({
-        message:"capacity full.Increse number of room",
-        adultAddButton_isDisabled:true
-      })
+        message: "Room capacity full.Increse number of room",
+        adultAddButton_isDisabled: true
+      });
     }
-
-   
   };
 
   reduceChildCounter = (childcount, adultcount) => {
@@ -156,15 +170,23 @@ class App extends Component {
       this.setState({
         childcount: childcount - 1,
         //   isDisabled : false
-        message:"",
+        message: "",
+        adultAddButton_isDisabled: false
       });
     }
   };
 
   render() {
-    let { roomcounter, adultcount, childcount, roomAddButton_isDisabled ,message ,adultAddButton_isDisabled } = this.state;
+    let {
+      roomcounter,
+      adultcount,
+      childcount,
+      roomAddButton_isDisabled,
+      message,
+      adultAddButton_isDisabled
+    } = this.state;
     return (
-      <div>
+      <div className = "app">
         <span>
           <i class="fa fa-group" color="grey" />
           Choose the number of people
@@ -172,19 +194,26 @@ class App extends Component {
         <div className="hotelApp">
           <div className="block">
             <i class="fa fa-bed" color="red" />
-            <span>Rooms {roomcounter}</span>
+            <span>Rooms </span>
 
             <button
-              onClick={() => this.addRoomCounter(roomcounter,message) }
+              onClick={() => this.addRoomCounter(roomcounter, message)}
               disabled={roomAddButton_isDisabled}
+              className="add"
             >
-              Add
-            </button>
-            <button onClick={() => this.reduceRoomCounter(roomcounter)} >
-              Reduce
+              <i className="fa fa-plus" />
             </button>
 
-            <span>{message}</span>
+            <span>{roomcounter}</span>
+            <button
+              onClick={() => this.reduceRoomCounter(roomcounter)}
+              className="reduce"
+            >
+              <i className="fa fa-minus" />
+            </button>
+
+            <br />
+            <span className="message">{message}</span>
 
             <br />
 
@@ -193,38 +222,52 @@ class App extends Component {
 
           <div className="block">
             <i class="fa fa-male" color="grey" />
-            <span>Adult {adultcount}</span>
+            <span>Adult </span>
 
             <button
-              onClick={() => this.addAdultCounter(adultcount, childcount,roomcounter)}
-              disabled = {adultAddButton_isDisabled}
+              onClick={() =>
+                this.addAdultCounter(adultcount, childcount, roomcounter)
+              }
+              disabled={adultAddButton_isDisabled}
+              className="add"
             >
-              Add
+              <i className="fa fa-plus" />
             </button>
+
+            <span>{adultcount}</span>
+
             <button
               onClick={() => this.reduceAdultCounter(adultcount, childcount)}
+              className="reduce"
             >
-              Reduce
+              <i className="fa fa-minus" />
             </button>
 
-            <br />
+            {/* <br /> */}
 
             <div className="dash" />
           </div>
 
           <div className="block">
             <i class="fa fa-child" color="grey" />
-            <span>Children {childcount}</span>
+            <span>Children </span>
 
             <button
-              onClick={() => this.addChildCounter(childcount, adultcount,roomcounter)}
+              onClick={() =>
+                this.addChildCounter(childcount, adultcount, roomcounter)
+              }
+              className="add"
             >
-              Add
+              <i className="fa fa-plus" />
             </button>
+
+            <span>{childcount}</span>
+
             <button
               onClick={() => this.reduceChildCounter(childcount, adultcount)}
+              className="reduce"
             >
-              Reduce
+              <i className="fa fa-minus" />
             </button>
           </div>
         </div>
